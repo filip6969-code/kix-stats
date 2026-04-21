@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#185FA5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="KIX Stats" />
+  <title>KIX Stats</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-logo">KIX Stats</div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showView('live')">Utakmica</button>
+      <button class="nav-tab" onclick="showView('history')">Povijest</button>
+    </div>
+  </nav>
+
+  <!-- LIVE VIEW -->
+  <div id="view-live" class="view active">
+
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <input id="matchTitle" class="match-title-input" placeholder="Naziv utakmice (npr. KIX vs Rivals)" />
+        <span class="match-date" id="matchDate"></span>
+      </div>
+      <div class="toolbar-right">
+        <div class="q-row">
+          <button class="q-btn active" onclick="setQ(this)">1Q</button>
+          <button class="q-btn" onclick="setQ(this)">2Q</button>
+          <button class="q-btn" onclick="setQ(this)">3Q</button>
+          <button class="q-btn" onclick="setQ(this)">4Q</button>
+          <button class="q-btn" onclick="setQ(this)">OT</button>
+        </div>
+        <button class="btn-finish" onclick="finishMatch()">Završi utakmicu</button>
+      </div>
+    </div>
+
+    <!-- TIM A -->
+    <div class="team-section" id="sectionA">
+      <div class="team-header team-a-header">
+        <div class="team-badge badge-a">Tim A</div>
+        <input class="team-name-input" id="teamNameA" placeholder="Naziv tima A..." />
+        <span class="on-court-label" id="courtA"></span>
+        <button class="bench-toggle-btn" id="benchBtnA" onclick="toggleBench('A')"></button>
+        <button class="add-player-btn" onclick="openAddModal('A')">+ Igrač</button>
+      </div>
+      <div class="grid" id="gridA"></div>
+      <div class="bench-grid" id="benchA" style="display:none;"></div>
+    </div>
+
+    <div class="team-divider"></div>
+
+    <!-- TIM B -->
+    <div class="team-section" id="sectionB">
+      <div class="team-header team-b-header">
+        <div class="team-badge badge-b">Tim B</div>
+        <input class="team-name-input" id="teamNameB" placeholder="Naziv tima B..." />
+        <span class="on-court-label" id="courtB"></span>
+        <button class="bench-toggle-btn" id="benchBtnB" onclick="toggleBench('B')"></button>
+        <button class="add-player-btn" onclick="openAddModal('B')">+ Igrač</button>
+      </div>
+      <div class="grid" id="gridB"></div>
+      <div class="bench-grid" id="benchB" style="display:none;"></div>
+    </div>
+
+  </div>
+
+  <!-- HISTORY VIEW -->
+  <div id="view-history" class="view">
+    <div class="history-wrap">
+      <h2 class="history-title">Povijest utakmica</h2>
+      <div id="historyList" class="history-list"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ADD PLAYER MODAL -->
+<div id="addModal" class="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-title">Dodaj igrača</div>
+    <input id="modalNum" class="modal-input" placeholder="Broj dreса #" type="number" />
+    <input id="modalName" class="modal-input" placeholder="Ime (opcionalno)" />
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeAddModal()">Odustani</button>
+      <button class="modal-confirm" id="modalConfirmBtn" onclick="confirmAddPlayer()">Dodaj</button>
+    </div>
+  </div>
+</div>
+
+<!-- MATCH DETAIL MODAL -->
+<div id="detailModal" class="modal-overlay" onclick="closeDetailModal(event)">
+  <div class="modal modal-wide">
+    <div class="modal-title" id="detailTitle"></div>
+    <div id="detailContent"></div>
+    <div class="modal-btns" style="margin-top:16px;">
+      <button class="modal-cancel" onclick="closeDetailModal()">Zatvori</button>
+      <button class="modal-confirm" onclick="exportDetailPDF()">Izvoz PDF</button>
+      <button class="modal-confirm" style="background:#1D9E75;border-color:#1D9E75;" onclick="exportDetailCSV()">Izvoz Excel</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
